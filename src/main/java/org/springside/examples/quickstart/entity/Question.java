@@ -11,11 +11,13 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "ss_question")
@@ -45,12 +47,47 @@ public class Question extends IdEntity {
 		return subject;
 	}
 
+	@NotBlank
 	public Integer getQtype() {
 		return qtype;
 	}
 
 	public void setQtype(Integer qtype) {
 		this.qtype = qtype;
+	}
+
+	@Transient
+	@JsonIgnore
+	public String getQtypeStr() {
+		switch (qtype) {
+			case 1:
+				return "单项选择";
+			case 2:
+				return "多项选择";
+			case 3:
+				return "判断";
+			case 4:
+				return "填空";
+			case 5:
+				return "问答";
+			default :
+				return "";
+		}
+	}
+	
+	@Transient
+	@JsonIgnore
+	public String getLevelStr() {
+		switch (level) {
+			case 1:
+				return "简单";
+			case 2:
+				return "普通";
+			case 3:
+				return "较难";
+			default :
+				return "普通";
+		}
 	}
 
 	@NotBlank
@@ -114,6 +151,14 @@ public class Question extends IdEntity {
 
 	public void setSubject(Subject subject) {
 		this.subject = subject;
+	}
+	
+	@Transient
+	@JsonIgnore
+	public void setSubjectId(Long subjectId) {
+		Subject newSubject = new Subject();
+		newSubject.setId(subjectId);
+		this.subject = newSubject;
 	}
 
 	@Override

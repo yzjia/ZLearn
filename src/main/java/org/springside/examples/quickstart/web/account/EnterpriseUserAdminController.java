@@ -100,7 +100,7 @@ public class EnterpriseUserAdminController {
 		if (id != -1) {
 			model.addAttribute("user", accountService.getUser(id));
 		}
-		List<Subject> subjectList = subjectService.getAllSubject();
+		List<Subject> subjectList = subjectService.getSubjectByEnterpriseId(getCurrentUserId());
 		Map subjectMap = new HashMap();
 		for (Subject s : subjectList) {
 			subjectMap.put(s.getId(), s.getName());

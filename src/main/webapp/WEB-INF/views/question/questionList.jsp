@@ -23,19 +23,32 @@
 	</div>
 	
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
-		<thead><tr><th>任务</th><th>管理</th></tr></thead>
+		<thead><tr>
+		<th>试题题目</th>
+		<th>类型</th>
+		<th>选项</th>
+		<th>答案</th>
+		<th>难度</th>
+		<th>产品</th>
+		<th>管理</th>
+		</tr></thead>
 		<tbody>
-		<c:forEach items="${tasks.content}" var="task">
+		<c:forEach items="${questions.content}" var="question">
 			<tr>
-				<td><a href="${ctx}/task/update/${task.id}">${task.title}</a></td>
-				<td><a href="${ctx}/task/delete/${task.id}">删除</a></td>
+				<td><a href="${ctx}/question/update/${question.id}">${question.question}</a></td>
+				<td>${question.qtypeStr}</td>
+				<td>${question.options}</td>
+				<td>${question.answer}</td>
+				<td>${question.levelStr}</td>
+				<td>${question.subject.name}</td>
+				<td><a href="${ctx}/question/delete/${question.id}">删除</a></td>
 			</tr>
 		</c:forEach>
 		</tbody>
 	</table>
 	
-	<tags:pagination page="${tasks}" paginationSize="5"/>
+	<tags:pagination page="${questions}" paginationSize="5"/>
 
-	<div><a class="btn" href="${ctx}/task/create">创建任务</a></div>
+	<div><a class="btn" href="${ctx}/question/create">创建试题</a></div>
 </body>
 </html>
