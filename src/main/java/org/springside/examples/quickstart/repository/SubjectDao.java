@@ -5,6 +5,8 @@
  *******************************************************************************/
 package org.springside.examples.quickstart.repository;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -14,6 +16,8 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springside.examples.quickstart.entity.Subject;
 
 public interface SubjectDao extends PagingAndSortingRepository<Subject, Long>, JpaSpecificationExecutor<Subject> {
+	
+	List<Subject> findByEnterpriseId(Long id);
 
 	Page<Subject> findByEnterpriseId(Long id, Pageable pageRequest);
 

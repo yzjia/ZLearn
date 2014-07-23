@@ -50,6 +50,10 @@ public class AccountService {
 	public List<User> getAllUser() {
 		return (List<User>) userDao.findAll();
 	}
+	
+	public List<User> getUserByEnterprise(Long enterpriseId) {
+		return (List<User>) userDao.findAll();
+	}
 
 	public Enterprise getEnterprise(Long id) {
 		return enterpriseDao.findOne(id);
@@ -75,12 +79,19 @@ public class AccountService {
 		return userDao.findByEmail(email);
 	}
 
-	public void registerUser(Enterprise enterprise) {
+	public void registerEnterprise(Enterprise enterprise) {
 		entryptPassword(enterprise);
-		enterprise.setRoles("enterprice,user");
+		enterprise.setRoles("enterprice");
 		enterprise.setRegisterDate(clock.getCurrentDate());
 
 		enterpriseDao.save(enterprise);
+	}
+
+	public void createUser(User user) {
+		entryptPassword(user);
+		user.setRoles("user");
+		user.setCreateDate(clock.getCurrentDate());
+		userDao.save(user);
 	}
 
 	public void updateUser(User user) {
@@ -103,6 +114,18 @@ public class AccountService {
 			throw new ServiceException("不能删除超级管理员用户");
 		}
 		this.userDao.delete(id);
+	}
+	
+	public void deleteUser(Long id, Long enterpriseId) {
+		if (isSupervisor(id)) {
+			logger.warn("操作员{}尝试删除超级管理员用户", getCurrentUserName());
+			throw new ServiceException("不能删除超级管理员用户");
+		}
+		//只有用户的企业ID为当前企业时才删除此用户
+		User user =  userDao.findOne(id);
+		if (user.getEnterprise().getId().equals(enterpriseId)) {
+			this.userDao.delete(id);
+		}
 	}
 
 	public void deleteEnterprise(Long id) {

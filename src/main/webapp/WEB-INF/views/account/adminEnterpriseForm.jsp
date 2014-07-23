@@ -1,43 +1,18 @@
-<%@ page contentType="text/html;charset=UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="ctx" value="${pageContext.request.contextPath}" />
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
 
 <html>
 <head>
-<title>企业注册</title>
-
-<script>
-	$(document).ready(function() {
-		//聚焦第一个输入框
-		$("#loginName").focus();
-		//为inputForm注册validate函数
-		$("#inputForm").validate({
-			rules : {
-				loginName : {
-					remote : "${ctx}/register/checkLoginName"
-				},
-				email : {
-					remote : "${ctx}/register/checkEmail"
-				}
-			},
-			messages : {
-				loginName : {
-					remote : "用户名已存在"
-				},
-				email : {
-					remote : "邮箱地址已存在"
-				}
-			}
-		});
-	});
-</script>
+	<title>企业管理</title>
 </head>
 
 <body>
 	<div style="padding: 10px 200px 10px; width:700px">
-		<form id="inputForm" action="${ctx}/register" method="post" role="form">
+		<form id="inputForm" action="${ctx}/update" method="post" role="form">
 				<legend>
-					<small>企业用户注册</small>
+					<small>企业管理</small>
 				</legend>
 				<div class="form-group">
 					<label for="loginName" class="control-label">用户名:</label>
@@ -64,7 +39,6 @@
 				</div>
 				<div class="form-group">
 					<label for="confirmPassword" class="control-label">公司名称:</label>
-					
 						<input type="text" id="enterpriseName" name="enterpriseName" value="${enterprise.enterpriseName }"
 							class="form-control required" />
 				</div>
@@ -155,5 +129,19 @@
 				</div>
 		</form>
 	</div>
+	
+	<script>
+		$(document).ready(function() {
+			//聚焦第一个输入框
+			$("#enterpriseName").focus();
+			//为inputForm注册validate函数
+			$("#inputForm").validate();
+			
+			$("#orgAttribute").val(${enterprise.orgAttribute });
+			$("#scale").val(${enterprise.scale });
+			$("#businessCover").val(${enterprise.businessCover });
+			$("#businessType").val(${enterprise.businessType });
+		});
+	</script>
 </body>
 </html>

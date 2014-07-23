@@ -14,19 +14,38 @@
 	</c:if>
 	
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
-		<thead><tr><th>登录名</th><th>用户名</th><th>注册时间<th>管理</th></tr></thead>
+		<thead>
+		<tr>
+		<th>登录名</th>
+		<th>用户名</th>
+		<th>关联产品</th>
+		<th>注册时间</th>
+		<th>管理</th>
+		</tr>
+		</thead>
 		<tbody>
-		<c:forEach items="${users}" var="user">
+			<c:forEach items="${users}" var="user">
 			<tr>
-				<td><a href="${ctx}/admin/user/update/${user.id}">${user.loginName}</a></td>
+				<td><a href="${ctx}/enterprise/user/update/${user.id}">${user.loginName}</a></td>
 				<td>${user.name}</td>
+				<td>
+				<c:forEach items="${user.subjectList}" var="s">
+					<c:forEach items="${subjectMap}" var="entry">
+						<c:if test="${entry.key == s}">
+						<c:out value="${entry.value}" />
+						</c:if>
+					</c:forEach>
+					
+				</c:forEach>
+				</td>
 				<td>
 					<fmt:formatDate value="${user.createDate}" pattern="yyyy年MM月dd日  HH时mm分ss秒" />
 				</td>
-				<td><a href="${ctx}/admin/user/delete/${user.id}">删除</a></td>
+				<td><a href="${ctx}/enterprise/user/delete/${user.id}">删除</a></td>
 			</tr>
 		</c:forEach>
 		</tbody>
 	</table>
+	<div><a class="btn" href="${ctx}/enterprise/user/create">创建用户</a></div>
 </body>
 </html>

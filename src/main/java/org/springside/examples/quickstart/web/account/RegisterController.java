@@ -47,7 +47,7 @@ public class RegisterController {
 			request.setAttribute("enterprise", enterprise);
 			return "account/register";
 		}
-		accountService.registerUser(enterprise);
+		accountService.registerEnterprise(enterprise);
 		redirectAttributes.addFlashAttribute("username", enterprise.getLoginName());
 		return "redirect:/login";
 	}

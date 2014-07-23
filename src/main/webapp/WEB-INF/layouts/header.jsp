@@ -26,6 +26,8 @@
 							</shiro:hasRole>
 							<shiro:hasRole name="enterprice">
 								<li><a href="${ctx}/enterprise/user">管理用户</a></li>
+								<li><a href="${ctx}/subject">管理产品</a></li>
+								<li><a href="${ctx}/question">管理试题</a></li>
 							</shiro:hasRole>
 							<li><a href="${ctx}/profile">修改个人信息</a></li>
 							<li><a href="${ctx}/logout">注销</a></li>

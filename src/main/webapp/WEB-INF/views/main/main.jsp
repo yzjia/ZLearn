@@ -139,6 +139,21 @@
 				</form>
 			</div>
 			</shiro:notAuthenticated>
+			
+			<shiro:authenticated>
+			<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+	          <div class="list-group">
+	            <a href="#" class="list-group-item">链接1</a>
+	            <a href="#" class="list-group-item">链接2</a>
+	            <a href="#" class="list-group-item">链接3</a>
+	            <a href="#" class="list-group-item">链接4</a>
+	            <a href="#" class="list-group-item">链接5</a>
+	            <a href="#" class="list-group-item">链接6</a>
+	            <a href="#" class="list-group-item">链接7</a>
+	            <a href="#" class="list-group-item">链接8</a>
+	          </div>
+	        </div>
+			</shiro:authenticated>
 		</div>
 
 		<hr>

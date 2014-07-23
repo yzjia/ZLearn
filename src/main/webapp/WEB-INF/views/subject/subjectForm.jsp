@@ -7,20 +7,20 @@
 </head>
 
 <body>
-	<form id="inputForm" action="${ctx}/task/${action}" method="post" class="form-horizontal">
-		<input type="hidden" name="id" value="${task.id}"/>
+	<form id="inputForm" action="${ctx}/subject/${action}" method="post" class="form-horizontal">
+		<input type="hidden" name="id" value="${subject.id}"/>
 		<fieldset>
 			<legend><small>管理产品</small></legend>
 			<div class="control-group">
-				<label for="task_title" class="control-label">产品名称:</label>
+				<label for="subject_title" class="control-label">产品名称:</label>
 				<div class="controls">
-					<input type="text" id="task_title" name="title"  value="${task.title}" class="input-large required" minlength="3"/>
+					<input type="text" id="subject_name" name="name"  value="${subject.name}" class="input-large required" minlength="3"/>
 				</div>
 			</div>	
 			<div class="control-group">
 				<label for="description" class="control-label">产品描述:</label>
 				<div class="controls">
-					<textarea id="description" name="description" class="input-large">${task.description}</textarea>
+					<textarea id="description" name="description" class="input-large">${subject.description}</textarea>
 				</div>
 			</div>	
 			<div class="form-actions">
@@ -32,7 +32,7 @@
 	<script>
 		$(document).ready(function() {
 			//聚焦第一个输入框
-			$("#task_title").focus();
+			$("#subject_name").focus();
 			//为inputForm注册validate函数
 			$("#inputForm").validate();
 		});

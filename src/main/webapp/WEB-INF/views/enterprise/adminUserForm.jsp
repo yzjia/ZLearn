@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}"/>
 
 <html>
@@ -9,14 +10,19 @@
 </head>
 
 <body>
-	<form id="inputForm" action="${ctx}/admin/user/update" method="post" class="form-horizontal">
+	<form id="inputForm" action="${ctx}/enterprise/user/${action}" method="post" class="form-horizontal">
 		<input type="hidden" name="id" value="${user.id}"/>
 		<fieldset>
 			<legend><small>用户管理</small></legend>
 			<div class="control-group">
 				<label class="control-label">登录名:</label>
 				<div class="controls">
-					<input type="text" value="${user.loginName}" class="input-large" disabled="" />
+					<c:if test="${action == 'update'}">
+					<input type="text" id="loginName" name="loginName" value="${user.loginName}" class="input-large" disabled="" />
+					</c:if>
+					<c:if test="${action == 'create'}">
+					<input type="text" id="loginName" name="loginName" value="${user.loginName}" class="input-large" />
+					</c:if>
 				</div>
 			</div>
 			<div class="control-group">
@@ -38,11 +44,37 @@
 				</div>
 			</div>
 			<div class="control-group">
+				<label for="confirmPassword" class="control-label">关联产品:</label>
+				<div class="checkbox">
+					<c:forEach items="${subjectMap}" var="entry">
+								<label> 
+								<c:choose>
+								<c:when test="${fn:contains(user.subject,entry.key)}">
+									<input type="checkbox" id="subjectList" name="subjectList" class="input-large" value='<c:out value="${entry.key}" />' checked/>
+								</c:when>
+								<c:otherwise>
+									<input type="checkbox" id="subjectList" name="subjectList" class="input-large" value='<c:out value="${entry.key}" />' />
+								</c:otherwise>
+								</c:choose>
+									${entry.value}
+								</label>
+					</c:forEach>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">邮箱:</label>
+				<div class="controls">
+					<input type="text" id="email" name="email" value="${user.email}" class="input-large required"/>
+				</div>
+			</div>
+			<c:if test="${action == 'update'}">
+			<div class="control-group">
 				<label class="control-label">注册日期:</label>
 				<div class="controls">
 					<span class="help-inline" style="padding:5px 0px"><fmt:formatDate value="${user.createDate}" pattern="yyyy年MM月dd日  HH时mm分ss秒" /></span>
 				</div>
 			</div>
+			</c:if>
 			<div class="form-actions">
 				<input id="submit_btn" class="btn btn-primary" type="submit" value="提交"/>&nbsp;	
 				<input id="cancel_btn" class="btn" type="button" value="返回" onclick="history.back()"/>
@@ -53,9 +85,26 @@
 	<script>
 		$(document).ready(function() {
 			//聚焦第一个输入框
-			$("#name").focus();
+			/* $("#name").focus(); */
 			//为inputForm注册validate函数
-			$("#inputForm").validate();
+			$("#inputForm").validate({
+				rules : {
+					loginName : {
+						remote : "${ctx}/register/checkLoginName"
+					},
+					email : {
+						remote : "${ctx}/register/checkEmail"
+					}
+				},
+				messages : {
+					loginName : {
+						remote : "用户名已存在"
+					},
+					email : {
+						remote : "邮箱地址已存在"
+					}
+				}
+			});
 		});
 	</script>
 </body>

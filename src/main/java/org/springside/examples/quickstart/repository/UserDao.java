@@ -5,6 +5,8 @@
  *******************************************************************************/
 package org.springside.examples.quickstart.repository;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
@@ -14,6 +16,8 @@ import org.springside.examples.quickstart.entity.User;
 
 public interface UserDao extends PagingAndSortingRepository<User, Long> {
 	User findByLoginName(String loginName);
+	
+	List<User> findByEnterpriseId(Long id);
 	
 	Page<User> findByEnterpriseId(Long id, Pageable pageRequest);
 

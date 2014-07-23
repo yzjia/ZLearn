@@ -44,6 +44,10 @@ public class SubjectService {
 	public List<Subject> getAllSubject() {
 		return (List<Subject>) subjectDao.findAll();
 	}
+	
+	public List<Subject> getSubjectByEnterpriseId(Long enterpriseId) {
+		return subjectDao.findByEnterpriseId(enterpriseId);
+	}
 
 	public Page<Subject> getUserSubject(Long userId, Map<String, Object> searchParams, int pageNumber, int pageSize,
 			String sortType) {

@@ -5,7 +5,7 @@
 
 <html>
 <head>
-	<title>用户管理</title>
+	<title>企业管理</title>
 </head>
 
 <body>
@@ -14,16 +14,16 @@
 	</c:if>
 	
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
-		<thead><tr><th>登录名</th><th>用户名</th><th>注册时间<th>管理</th></tr></thead>
+		<thead><tr><th>登录名</th><th>企业名称</th><th>注册时间<th>管理</th></tr></thead>
 		<tbody>
-		<c:forEach items="${users}" var="user">
+		<c:forEach items="${enterprises}" var="enterprise">
 			<tr>
-				<td><a href="${ctx}/admin/user/update/${user.id}">${user.loginName}</a></td>
-				<td>${user.name}</td>
+				<td><a href="${ctx}/admin/enterprise/update/${enterprise.id}">${enterprise.loginName}</a></td>
+				<td>${enterprise.enterpriseName}</td>
 				<td>
-					<fmt:formatDate value="${user.createDate}" pattern="yyyy年MM月dd日  HH时mm分ss秒" />
+					<fmt:formatDate value="${enterprise.registerDate}" pattern="yyyy年MM月dd日  HH时mm分ss秒" />
 				</td>
-				<td><a href="${ctx}/admin/user/delete/${user.id}">删除</a></td>
+				<td><a href="${ctx}/admin/enterprise/delete/${enterprise.id}">删除</a></td>
 			</tr>
 		</c:forEach>
 		</tbody>
