@@ -19,7 +19,7 @@ public interface QuestionDao extends PagingAndSortingRepository<Question, Long>,
 	
 	List<Question> findByEnterpriseId(Long id);
 	
-	@Query("delete from Question question where question.enterprise.id=?1 adn subjectId=?2")
+	@Query("delete from Question question where question.enterprise.id=?1 and subjectId=?2")
 	List<Question> findByEnterpriseIdSubjectId(Long enterpriseId, Long subjectId);
 
 	Page<Question> findByEnterpriseId(Long id, Pageable pageRequest);

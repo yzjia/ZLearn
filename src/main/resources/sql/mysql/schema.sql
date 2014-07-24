@@ -45,7 +45,7 @@ create table ss_enterprise (
 	primary key (id)
 ) ENGINE=MyISAM;
 
-CREATE TABLE IF NOT EXISTS `ss_questions` (
+CREATE TABLE IF NOT EXISTS `ss_question` (
   `id` bigint auto_increment,
   `qtype` int(3) NOT NULL,
   `question` text NOT NULL,
@@ -60,62 +60,50 @@ CREATE TABLE IF NOT EXISTS `ss_questions` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
 
-select * from ss_enterprise;
+CREATE TABLE IF NOT EXISTS `ss_exam` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `type` int(3) NOT NULL,
+`name` text NOT NULL,
+`createtime` timestamp not null default 0,
+`begintime` timestamp not null default 0,
+`endtime` timestamp not null default 0,
+`enterprise_id` bigint NOT NULL,
+`subject_id` bigint NOT NULL,
+`totalscore` float(6,2) not null default 0,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM;
 
-CREATE TABLE IF NOT EXISTS `x2_examhistory` (
-  `ehid` int(11) NOT NULL AUTO_INCREMENT,
-  `ehexamid` int(11) NOT NULL,
-  `ehexam` varchar(240) NOT NULL,
-  `ehtype` int(11) NOT NULL,
-  `ehbasicid` int(11) NOT NULL,
-  `ehquestion` longtext NOT NULL,
-  `ehsetting` text NOT NULL,
-  `ehscorelist` text NOT NULL,
-  `ehuseranswer` text NOT NULL,
-  `ehtime` int(11) NOT NULL,
-  `ehscore` decimal(10,2) NOT NULL,
-  `ehuserid` int(11) NOT NULL,
-  `ehusername` varchar(120) NOT NULL,
-  `ehstarttime` int(11) NOT NULL,
-  `ehstatus` int(1) NOT NULL DEFAULT '1',
-  `ehdecide` int(1) NOT NULL,
-  PRIMARY KEY (`ehid`),
-  KEY `ehtype` (`ehtype`,`ehbasicid`,`ehtime`,`ehuserid`),
-  KEY `ehdecide` (`ehdecide`),
-  KEY `ehexamid` (`ehexamid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+CREATE TABLE IF NOT EXISTS `ss_examquestion` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+`exam_id` bigint NOT NULL,
+`question_id` bigint NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM;
 
--- --------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ss_userexam` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+`exam_id` bigint NOT NULL,
+`user_id` bigint NOT NULL,
+`begintime` timestamp not null default 0,
+`endtime` timestamp not null default 0,
+`grade` int(3) not null default 1,
+`rank` int(4) not null default 1,
+`score` float(6,2) not null default 0,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM;
 
---
--- 表的结构 `x2_exams`
---
+create table if not exists `ss_userexamanswer` (
+`id` bigint not null auto_increment,
+`exam_id` bigint not null,
+`user_id` bigint not null,
+`question_id` bigint not null,
+`correctFlag` int(3) not null default 0,
+`answer` text,
+`score` float(6,2) not null default 0,
+ PRIMARY KEY (`id`)
+) ENGINE=MyISAM;
 
-CREATE TABLE IF NOT EXISTS `x2_exams` (
-  `examid` int(11) NOT NULL AUTO_INCREMENT,
-  `examsubject` tinyint(4) NOT NULL,
-  `exam` varchar(120) NOT NULL,
-  `examsetting` text NOT NULL,
-  `examquestions` text NOT NULL,
-  `examscore` text NOT NULL,
-  `examstatus` int(1) NOT NULL DEFAULT '0',
-  `examtype` int(11) NOT NULL,
-  `examauthorid` int(11) NOT NULL,
-  `examauthor` varchar(120) CHARACTER SET utf8 COLLATE utf8_estonian_ci NOT NULL,
-  `examtime` int(11) NOT NULL,
-  `examkeyword` varchar(240) NOT NULL,
-  `examdecide` int(1) NOT NULL,
-  PRIMARY KEY (`examid`),
-  KEY `examstatus` (`examstatus`),
-  KEY `examtype` (`examtype`,`examauthorid`),
-  KEY `examtime` (`examtime`),
-  KEY `examsubject` (`examsubject`),
-  KEY `examdecide` (`examdecide`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
---
--- 转存表中的数据 `x2_exams`
---
 
 INSERT INTO `x2_exams` (`examid`, `examsubject`, `exam`, `examsetting`, `examquestions`, `examscore`, `examstatus`, `examtype`, `examauthorid`, `examauthor`, `examtime`, `examkeyword`, `examdecide`) VALUES
 (1, 1, '近代史课测试', 'a:5:{s:8:"examtime";i:90;s:7:"comfrom";s:0:"";s:5:"score";i:100;s:9:"passscore";i:60;s:8:"questype";a:5:{i:1;a:6:{s:6:"number";i:20;s:5:"score";i:1;s:8:"describe";s:0:"";s:10:"easynumber";i:30;s:12:"middlenumber";s:1:"0";s:10:"hardnumber";s:1:"0";}i:2;a:6:{s:6:"number";i:15;s:5:"score";i:2;s:8:"describe";s:0:"";s:10:"easynumber";i:15;s:12:"middlenumber";s:1:"0";s:10:"hardnumber";s:1:"0";}i:3;a:6:{s:6:"number";i:20;s:5:"score";i:2;s:8:"describe";s:0:"";s:10:"easynumber";i:20;s:12:"middlenumber";s:1:"0";s:10:"hardnumber";s:1:"0";}i:4;a:6:{s:6:"number";i:1;s:5:"score";i:10;s:8:"describe";s:1:"0";s:10:"easynumber";s:1:"0";s:12:"middlenumber";s:1:"0";s:10:"hardnumber";i:1;}i:5;a:6:{s:6:"number";s:1:"0";s:5:"score";s:1:"0";s:8:"describe";s:1:"0";s:10:"easynumber";s:1:"0";s:12:"middlenumber";s:1:"0";s:10:"hardnumber";s:1:"0";}}}', 'N;', '', 0, 1, 2, 'redrangon', 1372249127, '', 0),
