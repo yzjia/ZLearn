@@ -10,7 +10,7 @@
 
 <body>
 	<div style="padding: 10px 200px 10px; width:700px">
-		<form id="inputForm" action="${ctx}/update" method="post" role="form">
+		<form id="inputForm" action="${ctx}／admin/enterprise/update" method="post" role="form">
 				<legend>
 					<small>企业管理</small>
 				</legend>
