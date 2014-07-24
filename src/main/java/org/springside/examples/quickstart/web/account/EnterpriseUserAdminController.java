@@ -63,7 +63,7 @@ public class EnterpriseUserAdminController {
 	public String create(@Valid User newUser, RedirectAttributes redirectAttributes) {
 		Enterprise enterprise = new Enterprise(getCurrentUserId());
 		newUser.setEnterprise(enterprise);
-		accountService.registerEnterprise(enterprise);
+		accountService.createUser(newUser);
 		redirectAttributes.addFlashAttribute("message", "创建用户成功");
 		return "redirect:/enterprise/user";
 	}
